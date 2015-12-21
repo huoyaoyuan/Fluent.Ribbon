@@ -1948,6 +1948,7 @@ namespace Fluent
             var owner = Window.GetWindow(d);
             if (owner == null) return;
             var removelist = owner.Resources.MergedDictionaries.Where(x => oldUris.Contains(x.Source)).ToList();
+            owner.Resources.BeginInit();
             foreach (var uri in newUris)
             {
                 owner.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = uri });
@@ -1956,12 +1957,16 @@ namespace Fluent
             {
                 owner.Resources.MergedDictionaries.Remove(item);
             }
+            owner.Resources.EndInit();
 
-            var styletemp = owner.Style;
-            owner.Style = owner.FindResource("RibbonWindowStyle") as Style;
-            owner.Style = styletemp;
-            --owner.Width;
-            ++owner.Width;
+            if (owner is RibbonWindow)
+            {
+                owner.Style = null;
+                owner.Style = owner.FindResource("RibbonWindowStyle") as Style;
+                owner.Style = null;
+                --owner.Width;
+                ++owner.Width;
+            }
         }
 
         #endregion
