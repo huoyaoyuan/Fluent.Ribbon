@@ -181,6 +181,7 @@
     <Compile Include="Controls\ToggleButton.cs" />
     <Compile Include="Metro\Controls\WindowCommands.cs" />
     <Compile Include="Themes\Theme.cs" />
+    <Compile Include="Themes\Themes.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Documents\Features.xlsx" />
