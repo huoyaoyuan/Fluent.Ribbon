@@ -180,6 +180,7 @@
     <Compile Include="Controls\RibbonTabItem.cs" />
     <Compile Include="Controls\ToggleButton.cs" />
     <Compile Include="Metro\Controls\WindowCommands.cs" />
+    <Compile Include="Themes\Theme.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Documents\Features.xlsx" />

@@ -22,7 +22,7 @@ namespace Fluent
     using System.ComponentModel;
     using System.Windows.Threading;
     using Fluent.Extensions;
-
+    using Themes;
     // TODO: improve style parts naming & using
 
     /// <summary>
@@ -1913,6 +1913,55 @@ namespace Fluent
             {
                 ribbon.LoadInitialState();
             }
+        }
+
+        #endregion
+
+        #region Theme
+
+        public Theme Theme
+        {
+            get { return (Theme)GetValue(ThemeProperty); }
+            set { SetValue(ThemeProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Theme.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ThemeProperty =
+            DependencyProperty.Register("Theme", typeof(Theme), typeof(Ribbon), new PropertyMetadata(null, OnThemeChanged, CoerceTheme));
+
+        private static object CoerceTheme(DependencyObject d, object baseValue)
+        {
+            var ribbon = (Ribbon)d;
+            if (baseValue == null || !(baseValue is Theme))
+            {
+                return ribbon.Theme;
+            }
+
+            return baseValue;
+        }
+
+        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue == null) return;
+            var oldUris = (e.OldValue as Theme)?.GetThemeUris().ToArray() ?? new Uri[0];
+            var newUris = (e.NewValue as Theme)?.GetThemeUris() ?? Enumerable.Empty<Uri>();
+            var owner = Window.GetWindow(d);
+            if (owner == null) return;
+            var removelist = owner.Resources.MergedDictionaries.Where(x => oldUris.Contains(x.Source)).ToList();
+            foreach (var uri in newUris)
+            {
+                owner.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = uri });
+            }
+            foreach (var item in removelist)
+            {
+                owner.Resources.MergedDictionaries.Remove(item);
+            }
+
+            var styletemp = owner.Style;
+            owner.Style = owner.FindResource("RibbonWindowStyle") as Style;
+            owner.Style = styletemp;
+            --owner.Width;
+            ++owner.Width;
         }
 
         #endregion
