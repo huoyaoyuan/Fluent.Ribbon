@@ -12,6 +12,7 @@
     using System.Windows.Media.Imaging;
     using System.Windows.Threading;
     using Fluent;
+    using Fluent.Themes;
     using FluentTest.ViewModels;
     using Button = Fluent.Button;
 
@@ -107,27 +108,27 @@
 
         private void OnOffice2013Click(object sender, RoutedEventArgs e)
         {
-            this.ChangeTheme(Theme.Office2013, "pack://application:,,,/Fluent;component/Themes/Office2013/Generic.xaml");
+            this.ribbon.Theme = new Office2013Theme();
         }
 
         private void OnOffice2010SilverClick(object sender, RoutedEventArgs e)
         {
-            this.ChangeTheme(Theme.Office2010, "pack://application:,,,/Fluent;component/Themes/Office2010/Silver.xaml");
+            this.ribbon.Theme = new Office2010SilverTheme();
         }
 
         private void OnOffice2010BlackClick(object sender, RoutedEventArgs e)
         {
-            this.ChangeTheme(Theme.Office2010, "pack://application:,,,/Fluent;component/Themes/Office2010/Black.xaml");
+            this.ribbon.Theme = new Office2010BlackTheme();
         }
 
         private void OnOffice2010BlueClick(object sender, RoutedEventArgs e)
         {
-            this.ChangeTheme(Theme.Office2010, "pack://application:,,,/Fluent;component/Themes/Office2010/Blue.xaml");
+            this.ribbon.Theme = new Office2010BlueTheme();
         }
 
         private void OnWindows8Click(object sender, RoutedEventArgs e)
         {
-            this.ChangeTheme(Theme.Windows8, "pack://application:,,,/Fluent;component/Themes/Windows8/Silver.xaml");
+            this.ribbon.Theme = new Windows8Theme();
         }
 
 
